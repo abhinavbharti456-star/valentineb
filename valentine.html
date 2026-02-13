@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Our Moments 💖</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+body{
+    height:100vh;
+    overflow:hidden;
+    font-family:'Poppins',sans-serif;
+    background:linear-gradient(135deg,#ff9a9e,#fecfef,#fad0c4);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    color:white;
+    transition:0.3s;
+}
+.flash{background:#ffd6e7 !important;}
+
+.container{
+    text-align:center;
+    backdrop-filter:blur(12px);
+    background:rgba(255,255,255,0.2);
+    padding:35px;
+    border-radius:30px;
+    box-shadow:0 25px 60px rgba(0,0,0,0.25);
+    width:620px;
+    max-width:95vw;
+}
+
+h1{font-family:'Pacifico',cursive;font-size:2.4rem;margin-bottom:15px;}
+
+/* SLIDESHOW */
+.slideshow{width:260px;height:260px;margin:0 auto 10px;position:relative;}
+.slide{
+    position:absolute;width:100%;height:100%;object-fit:cover;
+    border-radius:22px;border:4px solid rgba(255,255,255,0.7);
+    box-shadow:0 10px 25px rgba(0,0,0,0.25);
+    opacity:0;transition:1s;
+}
+.slide.active{opacity:1;}
+
+.caption{font-size:0.95rem;margin-bottom:15px;min-height:24px;font-style:italic;}
+
+.message{font-size:1.05rem;margin:10px 0 20px;line-height:1.5;}
+
+.btns{display:flex;gap:15px;justify-content:center;margin-bottom:10px;}
+button{
+    border:none;padding:14px 26px;border-radius:999px;
+    font-size:1rem;font-weight:600;cursor:pointer;
+    background:white;color:#ff4d8d;
+}
+
+/* HEART BEAT */
+.heartbeat{animation:heartbeat 0.6s ease 3;}
+@keyframes heartbeat{
+0%{transform:scale(1);}25%{transform:scale(1.07);}40%{transform:scale(0.97);}60%{transform:scale(1.09);}100%{transform:scale(1);}
+}
+
+/* BALLOON HEARTS */
+.balloon{
+    position:fixed;
+    bottom:-50px;
+    font-size:24px;
+    animation:fly 5s linear forwards;
+}
+@keyframes fly{to{transform:translateY(-120vh);opacity:0;}}
+
+/* COLLAGE FINAL */
+.final{
+    display:none;
+    text-align:center;
+}
+.collage{
+    display:grid;grid-template-columns:1fr 1fr;gap:8px;
+    width:260px;margin:15px auto;
+}
+.collage img{
+    width:100%;height:130px;object-fit:cover;border-radius:16px;
+}
+.final h2{font-family:'Pacifico';margin-bottom:10px;}
+
+</style>
+</head>
+
+<body id="body">
+
+<div class="container" id="mainBox">
+
+<h1>Our Moments 💕</h1>
+
+<div class="slideshow">
+<img class="slide active" src="photo1.jpg">
+<img class="slide" src="photo2.jpg">
+<img class="slide" src="photo3.jpg">
+<img class="slide" src="photo4.jpg">
+<img class="slide" src="photo5.jpg">
+<img class="slide" src="photo6.jpg">
+</div>
+
+<div class="caption" id="caption"></div>
+
+<div class="message">
+You are my peace, my smile, my comfort and my favorite person. 💖<br>
+Every day with you feels like a beautiful dream I never want to wake up from. 🌸
+</div>
+
+<div class="btns">
+<button onclick="acceptLove()">Yes 💖</button>
+<button id="noBtn" onmouseover="runAway()">No 🙈</button>
+</div>
+
+<div id="question">Will you be my Valentine? 💍💗</div>
+
+</div>
+
+<!-- FINAL SCREEN -->
+<div class="final" id="finalScreen">
+<h2>Happy Valentine’s Day 💖</h2>
+<div style="font-size:22px">💑 Happy Couple 💑</div>
+
+<div class="collage">
+<img src="photo1.jpg">
+<img src="photo4.jpg">
+</div>
+
+<div>Forever Us ❤️</div>
+</div>
+
+<audio id="beatSound">
+<source src="https://cdn.pixabay.com/download/audio/2022/03/10/audio_1b9c8c9a82.mp3" type="audio/mp3">
+</audio>
+
+<script>
+/* CAPTIONS */
+const captions=[
+"The day I met you and felt how special you are 💖",
+"Your smile is my favorite thing in this world 🌸",
+"The girl who changed my life ✨",
+"Trying to be my best for you 😎",
+"Thinking about you always 💭",
+"Waiting for our forever ❤️"
+];
+
+const slides=document.querySelectorAll('.slide');
+const captionEl=document.getElementById('caption');
+let index=0;
+captionEl.innerText=captions[0];
+
+setInterval(()=>{
+slides[index].classList.remove('active');
+index=(index+1)%slides.length;
+slides[index].classList.add('active');
+captionEl.innerText=captions[index];
+},2500);
+
+/* HEART BALLOONS */
+function balloons(){
+for(let i=0;i<30;i++){
+let b=document.createElement('div');
+b.className='balloon';
+b.innerText='💖';
+b.style.left=Math.random()*100+'vw';
+b.style.animationDuration=(3+Math.random()*3)+'s';
+document.body.appendChild(b);
+setTimeout(()=>b.remove(),5000);
+}
+}
+
+/* ACCEPT LOVE */
+function acceptLove(){
+const box=document.getElementById('mainBox');
+const body=document.getElementById('body');
+const beat=document.getElementById('beatSound');
+
+beat.play();
+box.classList.add('heartbeat');
+body.classList.add('flash');
+setTimeout(()=>body.classList.remove('flash'),200);
+
+balloons();
+
+setTimeout(()=>{
+box.style.display='none';
+document.getElementById('finalScreen').style.display='block';
+},2500);
+}
+
+function runAway(){
+const btn=document.getElementById('noBtn');
+btn.style.position='absolute';
+btn.style.left=Math.random()*80+'vw';
+btn.style.top=Math.random()*80+'vh';
+}
+</script>
+
+</body>
+</html>
